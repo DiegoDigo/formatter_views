@@ -2,15 +2,16 @@ import os
 from re import findall, sub
 from configparser import ConfigParser
 from pathlib import Path
-from infra import dao
+from resouces import resouce
+# from infra import dao
 
-def criar_diretorio_destino(destino: str) -> None: 
+def criar_diretorio_destino(destino: str) -> None:
     path = Path(destino)
     if not path.exists():
         path.mkdir(parents=True, exist_ok=True)
         if path.exists():
-             os.makedirs(os.path.join(destino, "views"))
-             os.makedirs(os.path.join(destino, "procedures"))
+            os.makedirs(os.path.join(destino, "views"))
+            os.makedirs(os.path.join(destino, "procedures"))
 
 
 def pegar_arquivos(caminho: str) -> list:
@@ -20,24 +21,21 @@ def pegar_arquivos(caminho: str) -> list:
 
 def pegar_nomes(texto: str) -> list:
     """ retorna os nomes das tabelas """
-    return findall(r"\.?([a-zA-Z]{4}\d{2}|[a-zA-Z]{6}\d{2})\.", texto)
-
+    return findall(r"(?:[\.\s])([a-zA-Z]+\d{2})(?:[\.\s])", texto)
 
 
 def gravar_arquivo(caminho: str, texto: str) -> None:
     """ grava o arquivo editado """
-    # with open(caminho, "a", encoding="iso-8859-1") as arq:
-    #     arq.write(trocar_schema(texto))
-    dao.criar_view(trocar_schema(texto))
-
+    with open(caminho, "a", encoding="iso-8859-1") as arq:
+        arq.write(trocar_schema(texto))
+    # dao.criar_view(trocar_schema(texto))
 
 
 def formatar_string(destino: str, texto: str, arquivo: str, tipo: str, num_empresa: int) -> None:
     """ subistitui o nome da tabela pelo novo nome """
     for nome in pegar_nomes(texto):
-         texto = sub(nome, nome[:-2] + num_empresa, texto)
+        texto = sub(nome, nome[:-2] + num_empresa, texto)
     gravar_arquivo(os.path.join(os.path.join(destino, tipo), arquivo), texto)
-
 
 
 def ler_arquivo(destino: str, caminho: str, arquivo: str, tipo: str, num_empresa: int) -> None:
@@ -52,21 +50,22 @@ def trocar_schema(texto: str) -> str:
     novo_texto = ''
     for line in texto.split('\n'):    
         for key in caminho.keys():                          
-            for i in set(findall(r'\?{}\.'.format(key),texto)):
-                line = sub(i,caminho[i], line) 
+            for i in set(findall(r'\?{}\.'.format(key), texto)):
+                line = sub(i, caminho[i], line)
         novo_texto += line + "\n"
     return novo_texto
 
 
-
 if __name__ == "__main__":
-    
+
+    pasta_views = os.path.join(os.path.join(resouce.NOME_PASTA + "\\views", os.listdir(resouce.extrair_arquivo())[0]))
+
     config = ConfigParser()
     config.read('settings\config.ini')
     caminho = dict(config['CONFIG'])
 
-    for arquivo in pegar_arquivos(caminho["views"]):
-        ler_arquivo(caminho["destino"], caminho["views"], arquivo, "views", caminho["num_empresa"])
+    for arquivo in pegar_arquivos(pasta_views):
+        ler_arquivo(caminho["destino"], pasta_views, arquivo, "views", caminho["num_empresa"])
 
     for arquivo in pegar_arquivos(caminho["proc"]):
         ler_arquivo(caminho["destino"], caminho["proc"], arquivo, "procedures", caminho["num_empresa"])
