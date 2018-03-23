@@ -9,3 +9,4 @@ settings/views_6461.sql
 venv/
 settings/gerar_arquivo_geral.py
 *.zip
+views/
