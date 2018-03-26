@@ -9,6 +9,7 @@ NOME_ARQUIVO = URL.split('/')[-1]
 
 
 def baixar_views() -> str:
+    """  faz o download das views do arquivo vindo do github. """
     local_filename = os.path.join(NOME_PASTA, NOME_ARQUIVO)
     r = _get(URL, auth=USER, stream=True)
     if r.status_code == 200:
@@ -22,6 +23,7 @@ def baixar_views() -> str:
 
 
 def extrair_arquivo() -> str:
+    """  Desconpactando arquivo baixado do github.  """
     pasta_zip = os.path.join(NOME_PASTA, "views")
     if not os.path.exists(pasta_zip):
         os.makedirs(pasta_zip)
