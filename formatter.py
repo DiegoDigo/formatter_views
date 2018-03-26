@@ -5,6 +5,7 @@ from pathlib import Path
 from resouces import resouce
 # from infra import dao
 
+
 def criar_diretorio_destino(destino: str) -> None:
     path = Path(destino)
     if not path.exists():
@@ -26,8 +27,9 @@ def pegar_nomes(texto: str) -> list:
 
 def gravar_arquivo(caminho: str, texto: str) -> None:
     """ grava o arquivo editado """
-    with open(caminho, "a", encoding="iso-8859-1") as arq:
-        arq.write(trocar_schema(texto))
+    with open(caminho, "w", encoding="iso-8859-1") as arq:
+        arq_final = sub(r"PERM"+caminho_conf["num_empresa"] + "\s", "PERM09", trocar_schema(texto))
+        arq.write(arq_final)
     # dao.criar_view(trocar_schema(texto))
 
 
@@ -49,25 +51,29 @@ def ler_arquivo(destino: str, caminho: str, arquivo: str, tipo: str, num_empresa
 def trocar_schema(texto: str) -> str:    
     novo_texto = ''
     for line in texto.split('\n'):    
-        for key in caminho.keys():                          
+        for key in caminho_conf.keys():
             for i in set(findall(r'\?{}\.'.format(key), texto)):
-                line = sub(i, caminho[i], line)
+                line = sub(i, caminho_conf[i], line)
         novo_texto += line + "\n"
     return novo_texto
 
 
 if __name__ == "__main__":
 
-    pasta_views = os.path.join(os.path.join(resouce.NOME_PASTA + "\\views", os.listdir(resouce.extrair_arquivo())[0]))
+    pasta_views = os.path.join(
+        os.path.join(os.path.join(resouce.NOME_PASTA + "\\views", os.listdir(resouce.extrair_arquivo())[0])),'views')
+    pasta_prodeures = os.path.join(
+        os.path.join(os.path.join(resouce.NOME_PASTA + "\\views", os.listdir(resouce.extrair_arquivo())[0])), 'procedures')
 
     config = ConfigParser()
     config.read('settings\config.ini')
-    caminho = dict(config['CONFIG'])
+    caminho_conf = dict(config['CONFIG'])
 
+    print("Lendo arquivos ..")
     for arquivo in pegar_arquivos(pasta_views):
-        ler_arquivo(caminho["destino"], pasta_views, arquivo, "views", caminho["num_empresa"])
+        ler_arquivo(caminho_conf["destino"], pasta_views, arquivo, "views", caminho_conf["num_empresa"])
 
-    for arquivo in pegar_arquivos(caminho["proc"]):
-        ler_arquivo(caminho["destino"], caminho["proc"], arquivo, "procedures", caminho["num_empresa"])
+    for arquivo in pegar_arquivos(pasta_prodeures):
+        ler_arquivo(caminho_conf["destino"], pasta_prodeures, arquivo, "procedures", caminho_conf["num_empresa"])
 
     input("Press Any key to exit")
