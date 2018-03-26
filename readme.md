@@ -13,10 +13,12 @@ Formatter view
         <li><b>DSN:</b> Nome da fonte de dados da conexão ODBC. </li>
     </ul> 
  </p>
- <h2>Exemplo de configuraçao</h2>
+ 
+ Exemplo de configuraçao do arquivo ***config.ini***
+ --------
  
     [CONFIG] #Campo Obrigatorio 
-    destino = c:\users\diego.delmiro\desktop\teste2 #Campo Obrigatorio
+    destino = c:\pasta\pastaviews #Campo Obrigatorio
     num_empresa = 61 #Campo Obrigatorio
     DSN = DBCONTROL #Campo Obrigatorio
     parametros = DBCONTROL6461061 #Campo opcional
