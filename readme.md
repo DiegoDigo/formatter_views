@@ -1,4 +1,5 @@
-<h1><b>Formatter view</b></h1>
+Formatter view
+=========================
 <p>
     programa que busca online as views e procedures , edita as mesma com o dados da licença, e salva no DBMAKER
 </p>
@@ -13,28 +14,28 @@
     </ul> 
  </p>
  <h2>Exemplo de configuraçao</h2>
- <code>
-  [CONFIG] #Campo Obrigatorio 
-  destino = c:\users\diego.delmiro\desktop\teste2 #Campo Obrigatorio
-  num_empresa = 61 #Campo Obrigatorio
-  DSN = DBCONTROL #Campo Obrigatorio
-  parametros = DBCONTROL6461061 #Campo opcional
-  config = DBCONTROL6461061 #Campo opcional
-  cadastro = DBCONTROL6461061 #Campo opcional
-  cliente = DBCONTROL6461061 #Campo opcional
-  produto = DBCONTROL6461061 #Campo opcional
-  banda = DBCONTROL6461061 #Campo opcional
-  vendedor = DBCONTROL6461061 #Campo opcional
-  estoque = DBCONTROL6461061 #Campo opcional
-  pedido = DBCONTROL6461061 #Campo opcional
-  romaneio = DBCONTROL6461061 #Campo opcional
-  cev = DBCONTROL6461061 #Campo opcional
-  exportacao = DBCONTROL6461061 #Campo opcional
-  trafego = DBCONTROL6461061 #Campo opcional
-  ptcliente = DBCONTROL6461061 #Campo opcional
-  ptproduto = DBCONTROL6461061 #Campo opcional
-  ptpedido = DBCONTROL6461061 #Campo opcional
-  ptpreco = DBCONTROL6461061 #Campo opcional
-  ptcadastro = DBCONTROL6461061 #Campo opcional
-  ptconfig = DBCONTROL6461061 #Campo opcional
- </code>
+ 
+    [CONFIG] #Campo Obrigatorio 
+    destino = c:\users\diego.delmiro\desktop\teste2 #Campo Obrigatorio
+    num_empresa = 61 #Campo Obrigatorio
+    DSN = DBCONTROL #Campo Obrigatorio
+    parametros = DBCONTROL6461061 #Campo opcional
+    config = DBCONTROL6461061 #Campo opcional
+    cadastro = DBCONTROL6461061 #Campo opcional
+    cliente = DBCONTROL6461061 #Campo opcional
+    produto = DBCONTROL6461061 #Campo opcional
+    banda = DBCONTROL6461061 #Campo opcional
+    vendedor = DBCONTROL6461061 #Campo opcional
+    estoque = DBCONTROL6461061 #Campo opcional
+    pedido = DBCONTROL6461061 #Campo opcional
+    romaneio = DBCONTROL6461061 #Campo opcional
+    cev = DBCONTROL6461061 #Campo opcional
+    exportacao = DBCONTROL6461061 #Campo opcional
+    trafego = DBCONTROL6461061 #Campo opcional
+    ptcliente = DBCONTROL6461061 #Campo opcional
+    ptproduto = DBCONTROL6461061 #Campo opcional
+    ptpedido = DBCONTROL6461061 #Campo opcional
+    ptpreco = DBCONTROL6461061 #Campo opcional
+    ptcadastro = DBCONTROL6461061 #Campo opcional
+    ptconfig = DBCONTROL6461061 #Campo opcional
+ 
