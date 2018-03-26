@@ -59,6 +59,7 @@ def trocar_schema(texto: str) -> str:
 
 
 if __name__ == "__main__":
+    print("Lendo arquivos ..")
 
     pasta_views = os.path.join(
         os.path.join(os.path.join(resouce.NOME_PASTA + "\\views", os.listdir(resouce.extrair_arquivo())[0])),'views')
@@ -69,7 +70,6 @@ if __name__ == "__main__":
     config.read('settings\config.ini')
     caminho_conf = dict(config['CONFIG'])
 
-    print("Lendo arquivos ..")
     for arquivo in pegar_arquivos(pasta_views):
         ler_arquivo(caminho_conf["destino"], pasta_views, arquivo, "views", caminho_conf["num_empresa"])
 
