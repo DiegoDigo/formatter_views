@@ -1,10 +1,10 @@
 import os
-import sys
+import getpass
 from re import findall, sub
 from configparser import ConfigParser
 from pathlib import Path
 from resouces import resouce
-from infra import dao
+from infra import dbmaker
 
 
 def criar_diretorio_destino(destino: str) -> None:
@@ -67,33 +67,40 @@ def salvar_dbmaker(dsn: str, tipo: str) -> None:
     for view in os.listdir(path_views):
         with open(os.path.join(path_views, view), 'r', encoding="iso-8859-1") as arq:
             if tipo == "views":
-                dao.criar_view(arq.read(), dsn)
+                dbmaker.criar_view(arq.read(), dsn)
             else:
-                dao.criar_procedure(arq.read(), dsn)
+                dbmaker.criar_procedure(arq.read(), dsn)
 
 
 if __name__ == "__main__":
-    print("Lendo arquivos ..")
 
-    pasta_views = os.path.join(
-        os.path.join(os.path.join(resouce.NOME_PASTA + "\\views",
-                                  os.listdir(resouce.extrair_arquivo())[0])), 'views')
-    pasta_prodeures = os.path.join(
-        os.path.join(os.path.join(resouce.NOME_PASTA + "\\views",
-                                  os.listdir(resouce.extrair_arquivo())[0])), 'procedures')
+    user = input("Digite usuario: ")
+    password = getpass.getpass()
 
-    config = ConfigParser()
-    config.read('settings\config.ini')
-    caminho_conf = dict(config['CONFIG'])
+    if user == dbmaker.USER_SUP['user'] and password == dbmaker.USER_SUP['password']:
+        print("Lendo arquivos ..")
 
-    for arquivo in pegar_arquivos(pasta_views):
-        ler_arquivo(caminho_conf["destino"], pasta_views, arquivo, "views", caminho_conf["num_empresa"])
+        pasta_views = os.path.join(
+            os.path.join(os.path.join(resouce.NOME_PASTA + "\\views",
+                                      os.listdir(resouce.extrair_arquivo())[0])), 'views')
+        pasta_prodeures = os.path.join(
+            os.path.join(os.path.join(resouce.NOME_PASTA + "\\views",
+                                      os.listdir(resouce.extrair_arquivo())[0])), 'procedures')
 
-    for arquivo in pegar_arquivos(pasta_prodeures):
-        ler_arquivo(caminho_conf["destino"], pasta_prodeures, arquivo, "procedures", caminho_conf["num_empresa"])
+        config = ConfigParser()
+        config.read('settings\config.ini')
+        caminho_conf = dict(config['CONFIG'])
 
-    salvar_dbmaker(caminho_conf['dsn'], 'views')
+        for arquivo in pegar_arquivos(pasta_views):
+            ler_arquivo(caminho_conf["destino"], pasta_views, arquivo, "views", caminho_conf["num_empresa"])
 
-    salvar_dbmaker(caminho_conf['dsn'], 'procedures')
+        for arquivo in pegar_arquivos(pasta_prodeures):
+            ler_arquivo(caminho_conf["destino"], pasta_prodeures, arquivo, "procedures", caminho_conf["num_empresa"])
 
-    input("Press Any key to exit")
+        salvar_dbmaker(caminho_conf['dsn'], 'views')
+
+        salvar_dbmaker(caminho_conf['dsn'], 'procedures')
+
+        input("Press Any key to exit")
+    else:
+        print("usuario e senha invalido !")

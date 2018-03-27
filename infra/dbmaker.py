@@ -1,5 +1,10 @@
 import pyodbc
 
+USER_SUP = {
+    'user': 'suporte',
+    'password': 'cuidado'
+}
+
 
 def criar_view(view: str, dsn: str) -> None:
     """  Recria ou cria as views na base do DBMAKER baseado na conexao DSN. """
