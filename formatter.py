@@ -8,14 +8,16 @@ from infra import dbmaker
 
 
 def criar_diretorio_destino(destino: str) -> None:
-    """ cria a estrutura de pasta que vem do arquivo de configuração. """
-    path = Path(destino)
-    if not path.exists():
-        path.mkdir(parents=True, exist_ok=True)
-        if path.exists():
-            os.makedirs(os.path.join(destino, "views"))
-            os.makedirs(os.path.join(destino, "procedures"))
+    """ cria a estrutura de pasta que vem do arquivo de configuração. """   
 
+    path_view = os.path.join(destino, 'views')
+    path_procs = os.path.join(destino, 'procedures')
+
+    if not os.path.exists(path_view):
+        os.makedirs(path_view)
+
+    if not os.path.exists(path_procs):
+        os.makedirs(path_procs)
 
 def pegar_arquivos(caminho: str) -> list:
     """ lista todos os arquivos do diretorio. """
@@ -73,6 +75,8 @@ def salvar_dbmaker(dsn: str, tipo: str) -> None:
 
 
 if __name__ == "__main__":
+    
+    default = dict(dbmaker='True')
 
     user = input("Digite usuario: ")
     password = getpass.getpass()
@@ -87,7 +91,7 @@ if __name__ == "__main__":
             os.path.join(os.path.join(resouce.NOME_PASTA + "\\views",
                                       os.listdir(resouce.extrair_arquivo())[0])), 'procedures')
 
-        config = ConfigParser()
+        config = ConfigParser(default, allow_no_value=True)
         config.read('settings\config.ini')
         caminho_conf = dict(config['CONFIG'])
 
@@ -96,10 +100,10 @@ if __name__ == "__main__":
 
         for arquivo in pegar_arquivos(pasta_prodeures):
             ler_arquivo(caminho_conf["destino"], pasta_prodeures, arquivo, "procedures", caminho_conf["num_empresa"])
-
-        salvar_dbmaker(caminho_conf['dsn'], 'views')
-
-        salvar_dbmaker(caminho_conf['dsn'], 'procedures')
+            
+        if caminho_conf['dbmaker'] == 'true':
+            salvar_dbmaker(caminho_conf['dsn'], 'views')
+            salvar_dbmaker(caminho_conf['dsn'], 'procedures')
 
         input("Press Any key to exit")
     else:
