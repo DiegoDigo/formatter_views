@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pyinstaller = "*"
+
+[packages]
+certifi = "==2018.1.18"
+chardet = "==3.0.4"
+configparser = "==3.5.0"
+idna = "==2.6"
+pyodbc = "==4.0.22"
+requests = "==2.18.4"
+urllib3 = "==1.22"
+
+[requires]
+python_version = "3.6"

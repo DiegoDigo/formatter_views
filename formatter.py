@@ -1,14 +1,13 @@
-import os
 import getpass
-from re import findall, sub
+import os
 from configparser import ConfigParser
-from pathlib import Path
-from resouces import resouce
+from re import findall, sub
 from infra import dbmaker
+from resouces import resouce
 
 
 def criar_diretorio_destino(destino: str) -> None:
-    """ cria a estrutura de pasta que vem do arquivo de configuração. """   
+    """ cria a estrutura de pasta que vem do arquivo de configuração. """
 
     path_view = os.path.join(destino, 'views')
     path_procs = os.path.join(destino, 'procedures')
@@ -18,6 +17,7 @@ def criar_diretorio_destino(destino: str) -> None:
 
     if not os.path.exists(path_procs):
         os.makedirs(path_procs)
+
 
 def pegar_arquivos(caminho: str) -> list:
     """ lista todos os arquivos do diretorio. """
@@ -32,7 +32,7 @@ def pegar_nomes(texto: str) -> list:
 def gravar_arquivo(caminho: str, texto: str) -> None:
     """ grava o arquivo editado. """
     with open(caminho, "w", encoding="iso-8859-1") as arq:
-        arq_final = sub(r"PERM"+caminho_conf["num_empresa"] + "\s", "PERM09", trocar_schema(texto))
+        arq_final = sub(r"PERM" + caminho_conf["num_empresa"] + "\s", "PERM09", trocar_schema(texto))
         arq.write(arq_final)
 
 
@@ -54,7 +54,7 @@ def ler_arquivo(destino: str, caminho: str, arquivo: str, tipo: str, num_empresa
 def trocar_schema(texto: str) -> str:
     """  troca o schema das tabelas. """
     novo_texto = ''
-    for line in texto.split('\n'):    
+    for line in texto.split('\n'):
         for key in caminho_conf.keys():
             for i in set(findall(r'\?{}\.'.format(key), texto)):
                 line = sub(i, caminho_conf[i], line)
@@ -75,7 +75,7 @@ def salvar_dbmaker(dsn: str, tipo: str) -> None:
 
 
 if __name__ == "__main__":
-    
+
     default = dict(dbmaker='True')
 
     user = input("Digite usuario: ")
@@ -100,7 +100,7 @@ if __name__ == "__main__":
 
         for arquivo in pegar_arquivos(pasta_prodeures):
             ler_arquivo(caminho_conf["destino"], pasta_prodeures, arquivo, "procedures", caminho_conf["num_empresa"])
-            
+
         if caminho_conf['dbmaker'] == 'true':
             salvar_dbmaker(caminho_conf['dsn'], 'views')
             salvar_dbmaker(caminho_conf['dsn'], 'procedures')
