@@ -86,10 +86,10 @@ if __name__ == "__main__":
 
         pasta_views = os.path.join(
             os.path.join(os.path.join(resouce.NOME_PASTA + "\\views",
-                                      os.listdir(resouce.extrair_arquivo())[0])), 'views')
+                                  os.listdir(resouce.extrair_arquivo())[0])), 'views')
         pasta_prodeures = os.path.join(
             os.path.join(os.path.join(resouce.NOME_PASTA + "\\views",
-                                      os.listdir(resouce.extrair_arquivo())[0])), 'procedures')
+                                  os.listdir(resouce.extrair_arquivo())[0])), 'procedures')
 
         config = ConfigParser(default, allow_no_value=True)
         config.read('settings\config.ini')
