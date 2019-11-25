@@ -2,8 +2,8 @@ from requests import get as _get
 from zipfile import ZipFile
 import os
 
-URL = 'https://github.com/DiegoDigo/viewsPortal/archive/master.zip'
-HEADER = dict(Authorization='d79226e228ae0c58c6519efe995ba68244b3c94f')
+URL = 'https://github.com/ayronmax/view-portal/archive/master.zip'
+HEADER = dict(Authorization='4bebd5a3171499c2c884b2cc31645751cff19b1d')
 NOME_PASTA = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NOME_ARQUIVO = URL.split('/')[-1]
 
