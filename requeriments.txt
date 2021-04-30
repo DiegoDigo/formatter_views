@@ -1,7 +1,8 @@
-certifi==2018.1.18
+-i https://pypi.org/simple/
+certifi==2019.6.16
 chardet==3.0.4
-configparser==3.5.0
-idna==2.6
-pyodbc==4.0.22
-requests==2.18.4
-urllib3==1.22
+configparser==3.8.1
+idna==2.8
+pyodbc==4.0.27
+requests==2.22.0
+urllib3==1.25.8
